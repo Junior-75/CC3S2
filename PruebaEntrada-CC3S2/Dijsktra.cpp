@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+//Creamos la clase grafo
 class grafo{
 public:
     class Arista;
@@ -23,6 +24,7 @@ public:
     int cantVertices();
     void Dijkstra(int);
 };
+//Creamos de igual manera una clase arista 
 class grafo::Arista{
 public:
     grafo* destino;
@@ -34,6 +36,7 @@ public:
         sgte = NULL;
     }
 };
+//Funcion permite añadir vertices
 void grafo::insertarVertice(int nom) {
     grafo* nuevo=new grafo();
     grafo* ind;
@@ -49,7 +52,7 @@ void grafo::insertarVertice(int nom) {
     ind->sgte=nuevo;
     ind->cabeza=this->cabeza;
 }
-
+//Funcion para imprimir el grafo creado
 void grafo::mostrarGrafo(){
     grafo* ind=cabeza;
     while(ind!=NULL){
@@ -65,6 +68,7 @@ void grafo::mostrarGrafo(){
     }
 }
 
+//Funcion para insertar aristas con sus peso
 void grafo::insertarArista(int ini, int fin, int peso){
     grafo* indi;
     grafo* indf;
@@ -102,6 +106,7 @@ void grafo::insertarArista(int ini, int fin, int peso){
     nuevo->destino=indf;
 }
 
+//Funcion para buscar vertices
 grafo * grafo::buscarVertice(int v){
     grafo *ind=cabeza;
     while(ind!=NULL){
@@ -113,6 +118,7 @@ grafo * grafo::buscarVertice(int v){
     return NULL;
 }
 
+//Funcion para buscar aristas
 grafo::Arista * grafo::buscaArista(int u, int v){
     grafo *ind = buscarVertice(u);
     Arista *inda=ind->ady;
@@ -125,6 +131,7 @@ grafo::Arista * grafo::buscaArista(int u, int v){
     return NULL;
 }
 
+//Permite encontrar la arista con menor peso
 grafo::Arista * grafo::minArista(int v){
     grafo *indV= buscarVertice(v);
     int minpeso;
@@ -141,6 +148,7 @@ grafo::Arista * grafo::minArista(int v){
     return minA;
 }
 
+//Me retorna la cantidad de vertices no nulas 
 int grafo::cantVertices(){
     int cont=0;
     grafo *ind=cabeza;
@@ -151,6 +159,7 @@ int grafo::cantVertices(){
     return cont;
 }
 
+//Algoritmo de Dijsktra
 void grafo::Dijkstra(int v){
     grafo *spt = new grafo();
     grafo *ind = cabeza;
@@ -196,14 +205,16 @@ void grafo::Dijkstra(int v){
     }
 }
 
+//Inserta los pesos de cada arista asociado al grafo 
 void insertarAristas(grafo *g, int v, int u, int peso){
     g->insertarArista(v,u,peso);
     g->insertarArista(u,v,peso);
 }
 
 int main() {
-
+    //Definimos el grafo 
     grafo *p = new grafo();
+    //Insertamos los vertices
     p->insertarVertice(0);
     p->insertarVertice(1);
     p->insertarVertice(2);
@@ -213,6 +224,7 @@ int main() {
     p->insertarVertice(6);
     p->insertarVertice(7);
     p->insertarVertice(8);
+    //Insertamos las aristas
     insertarAristas(p,0,1,4);
     insertarAristas(p,1,2,8);
     insertarAristas(p,0,7,8);
@@ -229,11 +241,13 @@ int main() {
     insertarAristas(p,2,3,7);
     insertarAristas(p,2,5,4);
     cout << "Vert\t|  Lista de adyacencia\n";
+    //Muestra el grafo
     p->mostrarGrafo();
     cout<<"-------------------"<<endl;
     int v=0;
     cout<<"Algoritmo de Dijkstra iniciando en el vertice '"<<v<<"':\n";
     cout << "Vert\t|  Lista de adyacencia\n";
+    //Aplicamos el algoritmo al grafo p
     p->Dijkstra(v);
     
     return 0;
